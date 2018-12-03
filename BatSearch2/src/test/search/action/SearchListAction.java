@@ -21,7 +21,7 @@ public class SearchListAction extends Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		Config con=new Config();		
+	/*	Config con=new Config();		
 		String apiKey=con.getApiKey();
 		
 		String playerId=(String) request.getSession().getAttribute("playerId");
@@ -48,14 +48,14 @@ public class SearchListAction extends Action{
 		}
 		
 		JSONObject obj = new JSONObject(playerInfo);
-		JSONObject playerInfoObj= obj.getJSONObject("data")
+		JSONObject playerInfoObj_sq= obj.getJSONObject("data")
 										.getJSONObject("attributes")
 											.getJSONObject("gameModeStats")
 												.getJSONObject(pubgMode);
 
-		request.setAttribute("playerInfoObj", playerInfoObj);		
+		request.setAttribute("playerInfoObj_sq", playerInfoObj_sq);		
 		request.getSession().invalidate();
-		
+		*/
 		return new ActionForward("/views/search/list.jsp");
 	}
 
