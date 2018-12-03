@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafeComment">
+	<update id="update" parameterType="cafeCommentDto">
+		UPDATE board_cafe_comment2
+		SET content=#{content}
+		WHERE num=#{num}		
+	</update>
+	<update id="delete" parameterType="int">
+		UPDATE board_cafe_comment2
+		SET deleted='yes'
+		WHERE num=#{num}		
+	</update>
+	<insert id="insert" parameterType="cafeCommentDto">
+		INSERT INTO board_cafe_comment2
+		(num, writer, content, target_id, ref_group, comment_group, regdate)
+		VALUES(#{num}, #{writer}, #{content}, #{target_id},
+			#{ref_group}, #{comment_group}, SYSDATE)
+	</insert>
+	<select id="getSequence" resultType="int">
+		<!-- 시퀀스값이 원글 pk랑 겹칠수있어서 공유한다. -->
+		SELECT board_cafe_seq2.NEXTVAL
+		FROM DUAL
+	</select>
+	<!-- DUAL:컬럼1, 로우1 -->
+	<select id="getList" parameterType="int" resultType="cafeCommentDto">
+		SELECT num, writer, content, target_id, ref_group, comment_group,
+			   deleted, regdate
+		FROM board_cafe_comment2
+		WHERE ref_group=#{num}
+		ORDER BY comment_group ASC, num ASC
+	</select>	
+</mapper>
+

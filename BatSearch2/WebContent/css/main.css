@@ -1,0 +1,17 @@
+/* 끝나면 resources/css에 합쳐주세요 */
+.copyright{
+	text-align: center;
+}
+.navbar-text{
+	margin-top: 13px;
+	margin-bottom: 0;
+}
+.navbar-brand{
+	font-size: 14px;
+}
+.navbar-text {
+    margin-top: 15px;
+}
+#footer{
+	margin-top: 20px;
+}

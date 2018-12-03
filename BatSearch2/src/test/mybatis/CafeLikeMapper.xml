@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafeLike">
+	<select id="getSequence" resultType="int">
+		<!-- 시퀀스값이 원글 pk랑 겹칠수있어서 공유한다. -->
+		SELECT board_cafe_seq2.NEXTVAL
+		FROM DUAL
+	</select>
+	<select id="isLiked" parameterType="cafeLikeDto" resultType="int">
+		SELECT NVL(MAX(like_check),0)
+		FROM board_cafe_like
+		WHERE boardNum=#{boardNum} AND name=#{name}
+	</select>
+	<insert id="like_cancel" parameterType="cafeLikeDto">
+		MERGE INTO board_cafe_like a
+                 USING ( SELECT MAX(num) num
+                 		 FROM board_cafe_like
+                 		 WHERE boardNum = #{boardNum } AND name = #{name} ) b
+                 ON (a.num=b.num)        
+            WHEN MATCHED THEN                                  
+                     UPDATE SET 
+                        boardNum = #{boardNum },
+                        name = #{name},
+                        like_check = 0           
+            WHEN NOT MATCHED THEN                           
+            INSERT (num,boardNum, name) VALUES (board_cafe_seq2.NEXTVAL,#{boardNum },#{name}) 
+	</insert>
+	<insert id="like_add" parameterType="cafeLikeDto">
+		MERGE INTO board_cafe_like a
+                 USING ( SELECT MAX(num) num
+                 		 FROM board_cafe_like
+                 		 WHERE boardNum = #{boardNum } AND name = #{name} ) b
+                 ON (a.num=b.num)        
+            WHEN MATCHED THEN                                  
+                     UPDATE SET 
+                       like_check = 1         
+            WHEN NOT MATCHED THEN                           
+            INSERT (num,boardNum, name, like_check) VALUES (board_cafe_seq2.NEXTVAL, #{boardNum }, #{name}, 1)
+	</insert>	
+</mapper>
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafe">
+	<update id="addLikeCnt" parameterType="int">
+		UPDATE board_cafe2
+		SET likeCnt=(SELECT SUM(like_check) likeCnt FROM board_cafe_like WHERE boardNum=#{num})
+		WHERE num=#{num}
+	</update>		
+	<select id="getCount" parameterType="cafeDto" resultType="int">
+		SELECT NVL(MAX(ROWNUM), 0) rnum
+		FROM board_cafe2
+		<where>
+			<if test="content != null">
+				OR content LIKE '%'||#{content}||'%'
+			</if>
+			<if test="title != null">
+				OR title LIKE '%'||#{title}||'%'
+			</if>
+			<if test="writer != null">
+				OR writer LIKE '%'||#{writer}||'%'
+			</if>
+		</where>
+	</select>
+	<select id="getList" parameterType="cafeDto" resultType="cafeDto">
+		SELECT a.*,(select count(*) 
+					from board_cafe_comment2
+					where ref_group=a.num) as commentCnt
+			FROM (SELECT result1.*, ROWNUM rnum
+			   FROM (SELECT num,writer,title,content,viewCount,regdate
+			         FROM board_cafe2
+			         <where>
+						<if test="content != null">
+							OR content LIKE '%'||#{content}||'%'
+						</if>
+						<if test="title != null">
+							OR title LIKE '%'||#{title}||'%'
+						</if>
+						<if test="writer != null">
+							OR writer LIKE '%'||#{writer}||'%'
+						</if>
+					</where>
+			         ORDER BY num DESC) result1 ) a
+			WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	<update id="addViewCount" parameterType="int">
+		UPDATE board_cafe2
+		SET viewCount=viewCount+1
+		WHERE num=#{num}
+	</update>
+	<insert id="insert" parameterType="cafeDto">
+		INSERT INTO board_cafe2
+		(num,writer,title,content,viewCount,regdate)
+		VALUES(board_cafe_seq2.NEXTVAL,#{writer},#{title},#{content},#{viewCount},SYSDATE)
+	</insert>
+	<update id="update" parameterType="cafeDto">
+		UPDATE board_cafe2
+		SET title=#{title}, content=#{content}
+		WHERE num=#{num}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM board_cafe2
+		WHERE num=#{num}
+	</delete>
+	<select id="getData" parameterType="int"
+		resultType="cafeDto">
+		SELECT result1.*
+		FROM (SELECT num,writer,title,content,viewCount,TO_CHAR(regdate,'YYYY-MM-DD AM HH:MI') AS regdate,			
+				LAG(num, 1, 0) OVER(ORDER by num DESC) prevNum,
+				LEAD(num, 1, 0) OVER(ORDER by num DESC) nextNum,
+				likeCnt
+			FROM board_cafe2
+			ORDER by num DESC) result1
+		WHERE num=#{num}
+	</select>
+	<select id="getData2" parameterType="cafeDto"
+		resultType="cafeDto">
+		SELECT result1.*
+		FROM (SELECT num,writer,title,content,viewCount,TO_CHAR(regdate,'YYYY-MM-DD AM HH:MI') AS regdate,			
+				LAG(num, 1, 0) OVER(ORDER by num DESC) prevNum,
+				LEAD(num, 1, 0) OVER(ORDER by num DESC) nextNum,
+				likeCnt
+			FROM board_cafe2
+			<where>
+				<if test="content != null">
+					OR content LIKE '%'||#{content}||'%'
+				</if>
+				<if test="title != null">
+					OR title LIKE '%'||#{title}||'%'
+				</if>
+				<if test="writer != null">
+					OR writer LIKE '%'||#{writer}||'%'
+				</if>
+			</where>
+			ORDER by num DESC) result1
+		WHERE num=#{num}
+	</select>	
+</mapper>
+
