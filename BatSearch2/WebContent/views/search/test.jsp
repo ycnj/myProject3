@@ -18,7 +18,7 @@ URL url4 = new URL("https://api.pubg.com/shards/kakao/seasons");
 //시즌스탯
 URL url6 = new URL("https://api.pubg.com/shards/pc-kakao/players/account.b6bf3ff0f683400e8cb8bd5e6873fd54/seasons/division.bro.official.2018-10");
 URL url7 = new URL("https://api.pubg.com/shards/pc-kakao/players/account.b6bf3ff0f683400e8cb8bd5e6873fd54/seasons/division.bro.official.pc-2018-11");
-HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
 conn.setRequestMethod("GET");
 conn.setRequestProperty("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhODk3OGUyMC1kMDI5LTAxMzYtYzU2ZC0yOWVkYjMzMTRhZGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQyODUyNjA4LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1hMWI2ZWJlZS1hYzI0LTQwMzEtYTQ0Zi1jNWM3MTQ3Y2VkZWUifQ.ihJ45dIUBmpWKXzu2Jsm2wdRAr8pSWvh6Wsc_7e-gFg");
 //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhODk3OGUyMC1kMDI5LTAxMzYtYzU2ZC0yOWVkYjMzMTRhZGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQyODUyNjA4LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1hMWI2ZWJlZS1hYzI0LTQwMzEtYTQ0Zi1jNWM3MTQ3Y2VkZWUifQ.ihJ45dIUBmpWKXzu2Jsm2wdRAr8pSWvh6Wsc_7e-gFg

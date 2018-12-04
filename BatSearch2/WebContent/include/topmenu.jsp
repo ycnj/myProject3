@@ -10,11 +10,11 @@
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
 		<li>
-			<form class="form-inline navbar-form" action="${pageContext.request.contextPath }/search/list.do">
+			<%-- <form class="form-inline navbar-form" action="${pageContext.request.contextPath }/search/list.do">
 				<label for="playersName"></label>
 				<input class="form-control" type="text" id="playersName" name="playersName" style="width:150px"/>
 				<button type="submit" class="btn btn-primary" >검색</button>
-			</form>
+			</form> --%>
 		</li>
 		<c:if test="${name ne null }">
 			<li><a class="navbar-brand" href="${pageContext.request.contextPath }/users/private/info.do">${name } 님 로그인중</a></li>
