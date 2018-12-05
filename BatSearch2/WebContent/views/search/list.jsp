@@ -9,7 +9,6 @@
 <title>/views/search/list.jsp</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/main.css">
-<link rel="shortcut icon" href="#">
 <style>
 abbr[title], abbr[data-original-title] {
     border: none;
@@ -107,6 +106,21 @@ ul,li{
 }
 .ranked-stats-item p{
 	font-size: 12px;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 1100px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 1100px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1100px;
+  }
 }
 
 </style>

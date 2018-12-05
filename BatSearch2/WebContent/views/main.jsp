@@ -39,7 +39,7 @@
 				<div class="col-sm-9 col-sm-offset-2 ">				
 					<div class="form-group" >
 						<input class="form-control fg1" type="text" name="playerName" />						
-						<button class="btn btn-primary btn-search" >검색</button>
+						<button class="btn btn-primary">검색</button>
 					</div>
 				</div>
 				<div class="col-sm-9 col-sm-offset-2 ">

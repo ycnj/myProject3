@@ -22,8 +22,7 @@ public class SearchIdAction extends Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		String playerName=request.getParameter("playerName");
-		String pubgServer=request.getParameter("pubg-server");		
-		System.out.println(playerName);
+		String pubgServer=request.getParameter("pubg-server");
 		//id값 가져오기
 		Config con=new Config();		
 		String apiKey=con.getApiKey();
@@ -52,7 +51,7 @@ public class SearchIdAction extends Action {
 		request.getSession().setAttribute("pubgMode", request.getParameter("pubg-mode"));
 		request.getSession().setAttribute("pubgSeason", request.getParameter("pubg-season"));
 		
-		return new ActionForward("/search/list.do?");
+		return new ActionForward("/search/list.do");
 	}
 
 }

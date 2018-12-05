@@ -87,7 +87,7 @@ public class UserActionFactory {
 			action=new SearchListAction();
 		}else if(command.equals("/search/id")) {
 			action=new SearchIdAction();
-		}		
+		}
 		return action;
 	}
 }
