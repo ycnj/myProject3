@@ -8,7 +8,6 @@
 <title>/main.jsp</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/main.css">
-<link rel="shortcut icon" href="#">
 <style>
 .fg1{
 	display: inline;
@@ -199,26 +198,25 @@ abbr[title], abbr[data-original-title] {
 <script src="${pageContext.request.contextPath }/resources/js/config.js"></script>
 <script>
 'use strict';
-var apiKey = config.API_KEY;
+var apiKey = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhODk3OGUyMC1kMDI5LTAxMzYtYzU2ZC0yOWVkYjMzMTRhZGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQyODUyNjA4LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1hMWI2ZWJlZS1hYzI0LTQwMzEtYTQ0Zi1jNWM3MTQ3Y2VkZWUifQ.ihJ45dIUBmpWKXzu2Jsm2wdRAr8pSWvh6Wsc_7e-gFg";
 
 // EVENTS
 $(".btn-search").on('click', function(e) {
 	searchStats();
 });
 
-function searchStats() {
+function searchStats(e) {
 	var tmpPubgName = $('#playerName').val();
 	var tmpPubgServer = $('#pubg-server').val();
 	var tmpPubgMode = $('#pubg-mode').val();
 	var url = "https://api.pubg.com/shards/" + tmpPubgServer + "/players?filter[playerNames]=" + tmpPubgName;
 	$.ajax({			
 		method: "GET",
+		async:false,
 		url: url,
-		headers: {		
-            Accept: "application/vnd.api+json"
-        },
         beforeSend: function (auth) {
-            auth.setRequestHeader("Authorization", "Bearer " + apiKey);       
+        	auth.setRequestHeader("Authorization", apiKey);
+        	auth.setRequestHeader("Accept", "application/vnd.api+json");
         },
         success: function(result) { 
             var tmpPubgId = result.data[0].id;
@@ -226,65 +224,16 @@ function searchStats() {
             var url = "https://api.pubg.com/shards/" + tmpPubgServer + "/players/" + tmpPubgId + "/seasons/" + tmpPubgSeason;
             $.ajax({
                 method: "GET",
+                async:false,
                 url: url,
-                headers: {
-                    Accept: "application/vnd.api+json"
-                	},
                 beforeSend: function (auth) {
-                    auth.setRequestHeader("Authorization", "Bearer " + apiKey);                    
+                	auth.setRequestHeader("Authorization", apiKey);
+                	auth.setRequestHeader("Accept", "application/vnd.api+json");
                 },
                 success: function(result) {
-                	var isData = false;
-                     $.each(result.data.attributes.gameModeStats, function(key, value) {
-                        if (key == tmpPubgMode) {
-                            $('.assists').text(value.assists);
-                            $('.boosts').text(value.boosts);
-                            $('.dBNOs').text(value.dBNOs);
-                            $('.dailyKills').text(value.dailyKills);
-                            $('.damageDealt').text(parseInt(value.damageDealt));
-                            $('.days').text(value.days);
-                            $('.headshotKills').text(value.headshotKills);
-                            $('.heals').text(value.heals);
-                            $('.killPoints').text(value.killPoints);
-                            $('.kills').text(value.kills);
-                            var tmpLongestKill = parseFloat(value.longestKill).toFixed(2);//소수점, 2자리
-                            $('.longestKill').text(tmpLongestKill + ' m');
-                            var tmpLongestTimeSurvived = parseInt(value.longestTimeSurvived / 60);
-                            $('.longestTimeSurvived').text(tmpLongestTimeSurvived + ' min');
-                            $('.losses').text(value.losses);
-                            $('.maxKillStreaks').text(value.maxKillStreaks);
-                            var tmpMostSurvivalTime = parseInt(value.mostSurvivalTime / 60);
-                            $('.mostSurvivalTime').text(tmpMostSurvivalTime + ' min');
-                            $('.revives').text(value.revives);
-                            var tmpRideDistance = parseFloat(value.rideDistance / 1000).toFixed(2);
-                            $('.rideDistance').text(tmpRideDistance + ' km');
-                            $('.roadKills').text(value.roadKills);
-                            $('.roundMostKills').text(value.roundMostKills);
-                            $('.roundsPlayed').text(value.roundsPlayed);
-                            $('.suicides').text(value.suicides);
-                            $('.teamKills').text(value.teamKills);
-                            var tmpTimeSurvived = parseInt(value.timeSurvived / 60);
-                            $('.timeSurvived').text(tmpTimeSurvived + ' min');
-                            $('.top10s').text(value.top10s);
-                            $('.vehicleDestroys').text(value.vehicleDestroys);
-                            var tmpWalkDistance = parseFloat(value.walkDistance / 1000).toFixed(2);
-                            $('.walkDistance').text(tmpWalkDistance + ' km');
-                            $('.weaponsAcquired').text(value.weaponsAcquired);
-                            $('.weeklyKills').text(value.weeklyKills);
-                            $('.winPoints').text(value.winPoints);
-                            $('.wins').text(value.wins);
-                            $('.bestRankPoint').text(value.bestRankPoint);
-                            $('.dailyWins').text(value.dailyWins);
-                            $('.rankPoints').text(value.rankPoints);
-                            var tmpSwimDistance = parseFloat(value.swimDistance / 1000).toFixed(2);
-                            $('.swimDistance').text(tmpSwimDistance + ' km');
-                            
-                            isData = true;
-                        }                       
-                    });
-                    if (isData == true) {
-                        alert("Error1");
-                    }
+                	alert("야1")
+                	console.log(result)
+                	alert("야2")                	
                 },
                 error: function(error){
                 	alert("Error2");
@@ -296,6 +245,62 @@ function searchStats() {
         }
 	});	
 };
+
+/*
+ * 
+ var isData = false;
+ $.each(result.data.attributes.gameModeStats, function(key, value) {
+    if (key == tmpPubgMode) {
+        $('.assists').text(value.assists);
+        $('.boosts').text(value.boosts);
+        $('.dBNOs').text(value.dBNOs);
+        $('.dailyKills').text(value.dailyKills);
+        $('.damageDealt').text(parseInt(value.damageDealt));
+        $('.days').text(value.days);
+        $('.headshotKills').text(value.headshotKills);
+        $('.heals').text(value.heals);
+        $('.killPoints').text(value.killPoints);
+        $('.kills').text(value.kills);
+        var tmpLongestKill = parseFloat(value.longestKill).toFixed(2);//소수점, 2자리
+        $('.longestKill').text(tmpLongestKill + ' m');
+        var tmpLongestTimeSurvived = parseInt(value.longestTimeSurvived / 60);
+        $('.longestTimeSurvived').text(tmpLongestTimeSurvived + ' min');
+        $('.losses').text(value.losses);
+        $('.maxKillStreaks').text(value.maxKillStreaks);
+        var tmpMostSurvivalTime = parseInt(value.mostSurvivalTime / 60);
+        $('.mostSurvivalTime').text(tmpMostSurvivalTime + ' min');
+        $('.revives').text(value.revives);
+        var tmpRideDistance = parseFloat(value.rideDistance / 1000).toFixed(2);
+        $('.rideDistance').text(tmpRideDistance + ' km');
+        $('.roadKills').text(value.roadKills);
+        $('.roundMostKills').text(value.roundMostKills);
+        $('.roundsPlayed').text(value.roundsPlayed);
+        $('.suicides').text(value.suicides);
+        $('.teamKills').text(value.teamKills);
+        var tmpTimeSurvived = parseInt(value.timeSurvived / 60);
+        $('.timeSurvived').text(tmpTimeSurvived + ' min');
+        $('.top10s').text(value.top10s);
+        $('.vehicleDestroys').text(value.vehicleDestroys);
+        var tmpWalkDistance = parseFloat(value.walkDistance / 1000).toFixed(2);
+        $('.walkDistance').text(tmpWalkDistance + ' km');
+        $('.weaponsAcquired').text(value.weaponsAcquired);
+        $('.weeklyKills').text(value.weeklyKills);
+        $('.winPoints').text(value.winPoints);
+        $('.wins').text(value.wins);
+        $('.bestRankPoint').text(value.bestRankPoint);
+        $('.dailyWins').text(value.dailyWins);
+        $('.rankPoints').text(value.rankPoints);
+        var tmpSwimDistance = parseFloat(value.swimDistance / 1000).toFixed(2);
+        $('.swimDistance').text(tmpSwimDistance + ' km');
+        
+        isData = true;
+        alert("왔냐?")
+    }                       
+});
+if (isData == false) {
+    alert("Error1");
+}
+ */
 </script>
 </body>
 </html>

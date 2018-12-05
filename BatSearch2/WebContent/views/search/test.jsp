@@ -1,3 +1,5 @@
+<%@page import="org.json.JSONObject"%>
+<%@page import="org.json.JSONArray"%>
 <%@page import="java.io.InputStreamReader"%>
 <%@page import="java.io.BufferedReader"%>
 <%@page import="java.io.InputStream"%>
@@ -26,6 +28,14 @@ conn.setRequestProperty("Accept", "application/vnd.api+json");
 
 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 String userInfo = bufferedReader.readLine();
+/* 
+JSONObject obj = new JSONObject(userInfo);
+JSONObject playerInfoObj_sq= obj.getJSONObject("data")
+								.getJSONObject("relationships")
+									.getJSONObject("gameModeStats")
+										.getJSONObject("squad");
+JSONArray jsonArray = userInfo.getJSONArray("object"); */
+out.print(userInfo);
 %>
 <!DOCTYPE html>
 <html>

@@ -48,6 +48,7 @@ public class SearchListAction extends Action{
 		}
 		
 		JSONObject obj = new JSONObject(playerInfo);
+		request.setAttribute("pI", playerInfo);
 		//squad--------------------------------------------------------------
 		JSONObject playerInfoObj_sq= obj.getJSONObject("data")
 										.getJSONObject("attributes")

@@ -61,12 +61,8 @@
 							<option value="pc-as">pc - Asia</option>
 						</select>
 						<select name="pubg-mode" class="form-control fg2">
-                            <option value="squad">squad</option>
-                            <option value="duo">duo</option>
-                            <option value="solo">solo</option>
-                            <option value="squad-fpp">squad-fpp</option>
-                            <option value="duo-fpp">duo-fpp</option>
-                            <option value="solo-fpp">solo-fpp</option>
+                            <option value="tpp">tpp</option>
+                            <option value="fpp">fpp</option>
                         </select>
 					</div>				
 				</div>
