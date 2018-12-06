@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import test.controller.Action;
@@ -47,8 +50,7 @@ public class SearchListAction extends Action{
 			e.printStackTrace();
 		}
 		
-		JSONObject obj = new JSONObject(playerInfo);
-		request.setAttribute("pI", playerInfo);
+		JSONObject obj = new JSONObject(playerInfo);			
 		//squad--------------------------------------------------------------
 		JSONObject playerInfoObj_sq= obj.getJSONObject("data")
 										.getJSONObject("attributes")
@@ -201,10 +203,33 @@ public class SearchListAction extends Action{
 		request.setAttribute("Top10Rate_sol", Top10Rate_sol);	
 		request.setAttribute("headshotKillsRate_sol", headshotKillsRate_sol);	
 		request.setAttribute("averageTimeSurvived_sol", timeString_sol);	
-		request.setAttribute("roundMostKills_sol", roundMostKills_sol);	
-
-		request.getSession().invalidate();
+		request.setAttribute("roundMostKills_sol", roundMostKills_sol);			
 		
+		//match--------------------------------------------------------------
+		Map<String, Object> matchInfoMap=new HashMap<>();
+		for(int i=0; i<5; i++) {
+			String matchInfo="";
+			try {
+				url = new URL("https://api.pubg.com/shards/"+ pubgServer +"/matches/"+ request.getSession().getAttribute("matchId"+i));			
+				conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("GET");
+				conn.setRequestProperty("Authorization","Bearer "+apiKey);
+	
+				conn.setRequestProperty("Accept", "application/vnd.api+json");
+				br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				matchInfo = br.readLine();
+				matchInfoMap.put("matchInfo"+i, matchInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		for(int i=0; i<5; i++) {
+			System.out.println(matchInfoMap.get("matchInfo"+i));
+			System.out.println("---------------------------------");
+			request.setAttribute("matchId"+i, matchInfoMap.get("matchInfo"+i));
+		}
+		
+		request.getSession().invalidate();
 		return new ActionForward("/views/search/list.jsp");
 	}
 

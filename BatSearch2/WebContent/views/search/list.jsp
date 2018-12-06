@@ -399,7 +399,11 @@ ul,li{
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
 <script>
-var pI=${pI};
+var matchId0=${matchId0};
+var matchId1=${matchId1};
+var matchId2=${matchId2};
+var matchId3=${matchId3};
+var matchId4=${matchId4};
 </script>
 </body>
 </html>

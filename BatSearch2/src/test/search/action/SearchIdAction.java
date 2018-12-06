@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,15 +44,20 @@ public class SearchIdAction extends Action {
 			e.printStackTrace();
 		}
 		
-		JSONObject obj = new JSONObject(idInfo);
-		JSONArray arr = obj.getJSONArray("data");
-		String playerId = arr.getJSONObject(0).getString("id");
-		
+		JSONObject obj = new JSONObject(idInfo).getJSONArray("data").getJSONObject(0);
+		String playerId = obj.getString("id");			
+			
 		request.getSession().setAttribute("playerId", playerId);
 		request.getSession().setAttribute("pubgServer", pubgServer);
 		request.getSession().setAttribute("pubgMode", request.getParameter("pubg-mode"));
 		request.getSession().setAttribute("pubgSeason", request.getParameter("pubg-season"));
 		
+		JSONArray infoArr = obj.getJSONObject("relationships")				
+								.getJSONObject("matches")
+									.getJSONArray("data");
+		for(int i=0; i<5; i++) {			
+			request.getSession().setAttribute("matchId"+i, infoArr.getJSONObject(i).getString("id"));
+		}
 		return new ActionForward("/search/list.do");
 	}
 
