@@ -399,7 +399,6 @@ ul,li{
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
 <script>
-var pI=${pI};
 </script>
 </body>
 </html>

@@ -20,7 +20,7 @@ URL url4 = new URL("https://api.pubg.com/shards/kakao/seasons");
 //시즌스탯
 URL url6 = new URL("https://api.pubg.com/shards/pc-kakao/players/account.b6bf3ff0f683400e8cb8bd5e6873fd54/seasons/division.bro.official.2018-10");
 URL url7 = new URL("https://api.pubg.com/shards/pc-kakao/players/account.b6bf3ff0f683400e8cb8bd5e6873fd54/seasons/division.bro.official.pc-2018-11");
-HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
+HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 conn.setRequestMethod("GET");
 conn.setRequestProperty("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhODk3OGUyMC1kMDI5LTAxMzYtYzU2ZC0yOWVkYjMzMTRhZGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQyODUyNjA4LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1hMWI2ZWJlZS1hYzI0LTQwMzEtYTQ0Zi1jNWM3MTQ3Y2VkZWUifQ.ihJ45dIUBmpWKXzu2Jsm2wdRAr8pSWvh6Wsc_7e-gFg");
 //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhODk3OGUyMC1kMDI5LTAxMzYtYzU2ZC0yOWVkYjMzMTRhZGMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTQyODUyNjA4LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1hMWI2ZWJlZS1hYzI0LTQwMzEtYTQ0Zi1jNWM3MTQ3Y2VkZWUifQ.ihJ45dIUBmpWKXzu2Jsm2wdRAr8pSWvh6Wsc_7e-gFg
@@ -28,14 +28,18 @@ conn.setRequestProperty("Accept", "application/vnd.api+json");
 
 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 String userInfo = bufferedReader.readLine();
-/* 
-JSONObject obj = new JSONObject(userInfo);
-JSONObject playerInfoObj_sq= obj.getJSONObject("data")
-								.getJSONObject("relationships")
-									.getJSONObject("gameModeStats")
-										.getJSONObject("squad");
-JSONArray jsonArray = userInfo.getJSONArray("object"); */
 out.print(userInfo);
+
+JSONObject obj = new JSONObject(userInfo);
+/* JSONArray aaa= obj.getJSONObject("data")
+						.getJSONObject("relationships")
+							.getJSONObject("matchesSquad")
+								.getJSONArray("data"); */
+//String aaa="d";
+JSONArray tmpArrInfo = obj.getJSONArray("data").getJSONObject(0)
+						.getJSONObject("relationships")
+							.getJSONObject("matches")
+								.getJSONArray("data");	
 %>
 <!DOCTYPE html>
 <html>
@@ -46,8 +50,8 @@ out.print(userInfo);
 <body>
 
 <script>
-	var userInfo=<%=userInfo%>;
-	
+var userInfo=<%=userInfo%>;
+var aaa=<%=tmpArrInfo%>;
 </script>
 
 

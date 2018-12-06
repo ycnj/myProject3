@@ -51,6 +51,7 @@ public class SearchIdAction extends Action {
 		request.getSession().setAttribute("pubgMode", request.getParameter("pubg-mode"));
 		request.getSession().setAttribute("pubgSeason", request.getParameter("pubg-season"));
 		
+		request.setAttribute("zz", "zzz");
 		return new ActionForward("/search/list.do");
 	}
 
