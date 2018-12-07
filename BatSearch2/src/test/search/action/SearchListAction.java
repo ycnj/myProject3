@@ -50,7 +50,8 @@ public class SearchListAction extends Action{
 			e.printStackTrace();
 		}
 		
-		JSONObject obj = new JSONObject(playerInfo);			
+
+		JSONObject obj = new JSONObject(playerInfo);
 		//squad--------------------------------------------------------------
 		JSONObject playerInfoObj_sq= obj.getJSONObject("data")
 										.getJSONObject("attributes")

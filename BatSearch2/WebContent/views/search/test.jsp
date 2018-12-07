@@ -52,7 +52,7 @@ String tmp1=tmpArrInfo.getJSONObject(0).getString("id");
 
 <script>
 var userInfo=<%=userInfo%>;
-var aaa='<%=tmp1%>';
+var aaa=<%=tmpArrInfo%>;
 </script>
 
 
